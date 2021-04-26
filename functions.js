@@ -118,3 +118,8 @@ function erstelleTabelle(a) {
   }
   document.getElementById("container").appendChild(table) //adds the table to the htmlpage
 }
+
+function SichereInput() {
+  let geojson = document.getElementById("geojson").value
+  console.log(geojson)
+}
