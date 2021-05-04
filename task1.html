@@ -1,21 +1,29 @@
-<!--author Jan Seemann-->
+<!--author Simon Meißner-->
 
 <!DOCTYPE html>
 <head>
-    <title>Geosoftware 1 Asssignment 1</title>
+    <title>Geosoftware 1 Asssignment 2</title>
     <link rel="stylesheet" href="style.css"></link>
     <script defer src="route.js"></script>
     <script defer src="polygon.js"></script>
-    <script defer src="uebung1-main.js"></script>
+    <script defer src="main.js"></script>
+    <script defer src="run.js"></script>
 
 </head>
 <body>
-    <h1>First assignment Jan Seemann</h1>
-    <p>The following table shows different sections of a given route running throug a given polygon.
-        The sections are sorted by descending length. The start and end points of the sections are also shown.
-        In the last column is stated, if the section is inside or outside the polygon.
-        The lengths are rounded to three decimal places.
-    </p>
+    <h1>Second assignment by Simon Meißner</h1>
+    <p>The following input field takes an route in the geojson format and intersects it with the given polygon from task1</p><br>
+
+    
+    <form onsubmit="return start()" class="geojson">
+      <label for="name">Pls paste your route in geojson format here: </label><br>
+      <input type="text" id="input" size="100" required></input><br>
+      <input type="submit" id="submit" value="Submit"></input>
+    </form>
+
+
+
+    <p>Table from task1</p>
     <table>
         <tr>
             <th>Sequence</th>

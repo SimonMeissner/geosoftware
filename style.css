@@ -1,7 +1,7 @@
 /*author: Jan Seemann */
 
 body {
-    background-color: rgb(104,34, 139);}
+    background-color: rgb(34,100,34);}
 
 h1 {
     color: rgb(255, 255, 255);
@@ -14,7 +14,7 @@ p {
     color: rgb(255, 255, 255);
     line-height: 1.8;
     font-family: Verdana, sans-serif;}
-    
+
 table, th, td {
     border: 2px solid rgb(255, 255, 255);
     width: 75%;
