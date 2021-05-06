@@ -1,10 +1,10 @@
 /*author: Jan Seemann */
 
 body {
-    background-color: rgb(34,100,34);}
+    background-color: rgb(34,80,34);}
 
 h1 {
-    color: rgb(255, 255, 255);
+    color: rgb(255, 180, 0);
     text-align: justify;
     font-family: Verdana, sans-serif;}
 
@@ -18,9 +18,16 @@ p {
 table, th, td {
     border: 2px solid rgb(255, 255, 255);
     width: 75%;
-    height: 70px;
+    height: 60px;
     padding: 10px;
     border-collapse: collapse;
     color: rgb(255, 255, 255);
     font-family: Verdana, sans-serif;
     text-align: center;}
+form {
+    text-align: justify;
+    width: 75%;
+    color: rgb(255, 255, 255);
+    line-height: 1.8;
+    font-family: Verdana, sans-serif;
+}
