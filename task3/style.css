@@ -1,0 +1,26 @@
+body {
+    background-color: rgb(63,145,208);}
+h1 {
+ color: #2F4BBA;
+ background-color: #F7DA45;
+ font-size: 28pt;
+}
+.introduction {
+  background-color: #E6E8F3;
+  font-size: 20pt;
+  padding: 8pt;
+}
+button {
+  font-size: 16pt;
+  padding: 2pt;
+}
+.form1 {
+  background-color: #E6E8F3;
+}
+.ausgabe {
+  color: #2B14BF;
+  font-weight: bold;
+  font-size: 14pt;
+  text-align: center;
+
+}
