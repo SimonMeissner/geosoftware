@@ -4,17 +4,18 @@
 //declaring variables
 
 
-var myMap = L.map('mapid').setView([52, 10], 7)
-var routeLayer = L.geoJSON().addTo(myMap)
-var routeAsArray = route.features[0].geometry.coordinates[0]
-var rectangle = []
-var leftBottomCorner = []
-var rightTopCorner = []
+
+var routeLayer = L.geoJSON()
+var routeAsArray = route.features[0].geometry.coordinates[0] //saving the route as an 2D array with the points in lat-long format
+var rectangle = [] //holds the coordinates of the drawn rectangle
+var leftBottomCorner = [] //leftBottomCorner of the rectangle
+var rightTopCorner = [] //rightTopCorner of the rectangle
+
 
 //variables from task1and2
 let pointsInOrOutsideArray = [] // [boolean] Array stores if a point lies inside or outside the polygon
 let intersectionIndexArray = [] // [integer] Array stores the indices, where the route intersects the polygon
-let intersectionCoords = []
+let intersectionCoords = [] //array which holds the corresponding
 
 
 //drawcontrol variables
@@ -30,9 +31,11 @@ var drawControl = new L.Control.Draw({
         featureGroup: drawnItems
     }
 })
-//declaring functions
 
 
+
+var myMap = L.map('mapid').setView([52, 10], 7)
+//adding tileLayer from mapbox to the map
 L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
     attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
     maxZoom: 18,
@@ -52,42 +55,64 @@ myMap.addLayer(drawnItems)
 myMap.addControl(drawControl)
 
 
-
-
 //ensuring to add the created rectangle as a layer to the map
 myMap.on(L.Draw.Event.CREATED, function (e) {
 
    var type = e.layerType
    var layer = e.layer
+   rectangle = layer.getLatLngs()
 
+   leftBottomCorner.push(rectangle[0][0].lng)
+   leftBottomCorner.push(rectangle[0][0].lat)
 
+   rightTopCorner.push(rectangle[0][2].lng)
+   rightTopCorner.push(rectangle[0][2].lat)
 
-       rectangle = layer.getLatLngs()
-       console.log(rectangle)
+   fillingPointsInOrOutside(routeAsArray)
+   fillingIntersectionIndexArray()
+   getIntersectionCoords()
 
+   for(let i = 0; i <= intersectionCoords.length-1; i++) {
 
-       leftBottomCorner.push(rectangle[0][0].lng)
-       leftBottomCorner.push(rectangle[0][0].lat)
+     getWeatherData(intersectionCoords[i][1], intersectionCoords[i][0])
+   }
 
-       rightTopCorner.push(rectangle[0][2].lng)
-       rightTopCorner.push(rectangle[0][2].lat)
-
-       console.log(leftBottomCorner, rightTopCorner)
-
-       fillingPointsInOrOutside(routeAsArray)
-       fillingIntersectionIndexArray()
-       getIntersectionCoords()
-       console.log(intersectionIndexArray)
-       console.log(intersectionCoords)
-
-
-
-   // Do whatever else you need to. (save to db; add to map etc)
    drawnItems.addLayer(layer)
    myMap.addLayer(layer)
 
 })
 
+//declaring functions
+
+
+/**
+ * getWeatherData - does an ajax request to the openweathermap api with the
+ * given point and adds a marker to the map at the point with an popup which contains weather information
+ *
+ * @param {type} lat Latitude of the point
+ * @param {type} lon Longitude of the point
+ *
+ */
+function getWeatherData (lat, lon) {
+  $(function () {
+    $.ajax({
+      type: 'GET',
+      url:  `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=minutely,hourly,daily&appid=${personalAPIkey}`,
+      success:  function(data) {
+
+        var marker = L.marker([lat,lon])
+
+
+        var textform ="Standort: " + data.lat + ", " + data.lon +
+                      "<br>Weather: " + data.current.weather[0].main +
+                      "<br>Temperature: " + Math.round(data.current.temp - 273.15) + "°C" +
+                      "<br>"
+
+        marker.bindPopup(textform).openPopup().addTo(myMap)
+      }
+    })
+  })
+}
 
 
 
@@ -102,7 +127,7 @@ function getIntersectionCoords() {
 }
 
 
-//functions from task1and2
+//reusing functions from task1and2
 /**
  * This function calculates if a point is in- or outside a given polygon.
  * It only works with rectangles are parellel to longitude and latitude.
@@ -114,11 +139,12 @@ function getIntersectionCoords() {
 function isPointInPolygon(coordinates) {
   return (coordinates[0] >= leftBottomCorner[0]) && (coordinates[0] <= rightTopCorner[0]) //the longitude of a point in the rectangle lies between the longitude of the left bottom and the right top corner
     &&
-    (coordinates[1] >= leftBottomCorner[1]) && (coordinates[1] <= rightTopCorner[1]); //the latitude of a point in the rectangle lies between the latitude of the left bottom and the right top corner
+    (coordinates[1] >= leftBottomCorner[1]) && (coordinates[1] <= rightTopCorner[1]) //the latitude of a point in the rectangle lies between the latitude of the left bottom and the right top corner
 }
 
 /**
  * This function fills the PointsInOrOutsideArray
+ * @param {[][]} 2D-array with the points of the route
  */
 function fillingPointsInOrOutside(r) {
   for (let index_route = 0; index_route < r.length; index_route++) { //iterating over each point in the route
@@ -131,10 +157,8 @@ function fillingPointsInOrOutside(r) {
  */
 function fillingIntersectionIndexArray() {
   for (let index = 0; index < pointsInOrOutsideArray.length; index++) {
-    if (//index == 0 || index == pointsInOrOutsideArray.length - 1 // setting the start and the end point of the route as part of the array
-      //||
-      (!pointsInOrOutsideArray[index] && (pointsInOrOutsideArray[index + 1] || pointsInOrOutsideArray[index - 1]))) { //The route intersects the polygon when the boolean pointsInOrOutsideArray[index] is false and the next or previous is true
-      intersectionIndexArray.push(index);
+    if (!pointsInOrOutsideArray[index] && (pointsInOrOutsideArray[index + 1] || pointsInOrOutsideArray[index - 1])) { //The route intersects the polygon when the boolean pointsInOrOutsideArray[index] is false and the next or previous is true
+      intersectionIndexArray.push(index)
     }
 
   }
