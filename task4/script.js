@@ -99,15 +99,20 @@ function getWeatherData (lat, lon) {
       type: 'GET',
       url:  `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=minutely,hourly,daily&appid=${personalAPIkey}`,
       success:  function(data) {
-
+        console.log(data)
         var marker = L.marker([lat,lon])
 
 
-        var textform ="Standort: " + data.lat + ", " + data.lon +
-                      "<br>Weather: " + data.current.weather[0].main +
-                      "<br>Temperature: " + Math.round(data.current.temp - 273.15) + "°C" +
-                      "<br>"
-
+        var textform ="Location: " + data.lat + " lat, " + data.lon + " lon" +
+                      "<br><dl><dt>Weather: " + data.current.weather[0].main +
+                      "</dt><dd> Description: " + data.current.weather[0].description +
+                      "</dd></dl>" +
+                      "Temperature: " + Math.round(data.current.temp - 273.15) + "°C" +
+                      "<br>Humidity: " + data.current.humidity + "%" +
+                      "<br>Pressure: " + data.current.pressure + "hPa"
+        if(data.alerts) {
+          textform += "<br><p style='border: 1px solid black;'>" + data.alerts[0].sender_name + ": " + data.alerts[0].description + "</p>"
+        }
         marker.bindPopup(textform).openPopup().addTo(myMap)
       }
     })
