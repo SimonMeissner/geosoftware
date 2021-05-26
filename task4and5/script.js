@@ -99,7 +99,7 @@ function getWeatherData (lat, lon) {
       type: 'GET',
       url:  `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=minutely,hourly,daily&appid=${personalAPIkey}`,
       success:  function(data) {
-        console.log(data)
+        
         var marker = L.marker([lat,lon])
 
 
