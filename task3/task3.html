@@ -9,10 +9,10 @@
   <!--Bootstrap stylesheet -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
-  <!--own stylesheet
+  <!--own stylesheet -->
   <link rel="stylesheet" href="style.css">
   </link>
-  -->
+
 
   <!--scripts -->
   <script defer src="apikey.js"></script>
@@ -39,30 +39,58 @@
       </nav>
     </div>
     <div class="card-body">
-      <h1>Task 3</h1><br>
+      <div class="container-fluid bg-light border">
+        <h1>Task 3</h1><br>
+        <div class="row">
+          <div class="col-xs-12 col-md-6">Click the button to show the latest informationon the weather at your current location!</div>
+          <div class="col-xs-12 col-md-6"><button id="button" onclick="start()">Show weather</button></div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12 col-md-6 border">
+            <p id="location"></p>
+            <p id="date"></p>
+          </div>
+          <div class="col-xs-12 col-md-6 border">
+            <p id="weather"></p>
+            <p id="temperature"></p>
+          </div>
+          <div class="col-xs-12 col-md-6 border">
+            <p id="feelslike"></p>
+            <p id="windspeed"></p>
+          </div>
+          <div class="col-xs-12 col-md-6 border">
+            <p id="humidity"></p>
+            <p id="pressure"></p>
+            <p id="sunriseandset"></p>
+          </div>
 
-      <p class="introduction">
-        Click the button to show the latest informationon the weather at your current location!
-      </p>
-      <button id="button" onclick="start()">Show weather</button><br>
-
-      <form class="form1">
-        <p class="ausgabe" id="location"></p>
-        <p class="ausgabe" id="date"></p>
-        <p class="ausgabe" id="weather"></p>
-        <p class="ausgabe" id="temperature"></p>
-        <p class="ausgabe" id="feelslike"></p>
-        <p class="ausgabe" id="windspeed"></p>
-        <p class="ausgabe" id="humidity"></p>
-        <p class="ausgabe" id="pressure"></p>
-        <p class="ausgabe" id="sunriseandset"></p>
-      </form>
+        </div>
+      </div>
     </div>
+
+
+
+
+
+
+
+
+
+        <p id="location"></p>
+        <p id="date"></p>
+        <p id="weather"></p>
+        <p id="temperature"></p>
+        <p id="feelslike"></p>
+        <p id="windspeed"></p>
+        <p id="humidity"></p>
+        <p id="pressure"></p>
+        <p id="sunriseandset"></p>
+
     <div class="card-footer">
       <h2>Impressum</h2>
       <p>
         Simon Meißner<br>
-        Hoher Heckenweg 36<br>
+        Annonyme Straße 99<br>
         48147 Münster</p>
       <p>
         Telefeon: 00000/0000000<br>
