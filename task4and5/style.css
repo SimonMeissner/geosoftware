@@ -1,3 +1,18 @@
 #mapid {
-  height: 800px;
+  height: 500px;
+}
+/* Wenn breiter als 601px */
+@media only screen and (min-width: 601px) {
+ #mapid {
+width: 50%;
+ }
+}
+/* Wenn schmaler als 600px*/
+@media only screen and (max-width: 600px) {
+ #mapid {
+width: 100%;
+ }
+}
+.nav-item:hover {
+  background-color: lightblue;
 }
